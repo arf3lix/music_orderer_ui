@@ -6,6 +6,7 @@ import { SongPreview } from '../components/SongPreview';
 import { useMobile } from '../hooks/useMobile';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { SongGroup, HierarchicalSong, Song, StreamEvent } from '../types/api';
+import { API_BASE_URL } from '../constants/api';
 
 interface UserData {
   phone: string;
@@ -177,11 +178,47 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
     });
   }, []);
 
-  const handleSendRequest = useCallback(() => {
-    // TODO: Enviar request al backend
-    console.log('TODO: Send request to backend:', songGroups);
-    alert('Request enviado! (placeholder - funcionalidad pendiente)');
-  }, [songGroups]);
+ 
+
+  const handleSendRequest = useCallback(async () => {
+    try {
+      // Mostrar estado de carga
+      console.log('Enviando request...', { phone: userData.phone, songGroups });
+      
+      const response = await fetch(`${API_BASE_URL}/api/order/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber: userData.phone,
+          songGroups: songGroups
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error del servidor');
+      }
+
+      if (data.success) {
+        // Éxito - limpiar estado
+        setSongGroups({});
+        
+        // Mostrar confirmación (puedes reemplazar alert con un componente mejor)
+        alert(`¡Pedido enviado exitosamente!\n\nID: ${data.data.tempId}\nCanciones: ${data.data.totalSongs}\nPrecio: $${(data.data.price / 100).toFixed(2)}`);
+        
+        console.log('Orden creada:', data.data);
+      } else {
+        throw new Error(data.error || 'Error desconocido');
+      }
+
+    } catch (error) {
+      console.error('Error enviando request:', error);
+      alert(`Error enviando el pedido: ${error.message}`);
+    }
+  }, [songGroups, userData.phone]);;
 
   if (isMobile) {
     return (
