@@ -48,7 +48,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
       }
 
       try {
-        const response = await fetch(`${API_BASE_URL}/search/artist?artist_name=${encodeURIComponent(searchQuery)}`);
+        const response = await fetch(`${API_BASE_URL}/metube/search/artist?artist_name=${encodeURIComponent(searchQuery)}`);
         const reader = response.body?.getReader();
         if (!reader) return;
 
@@ -94,14 +94,14 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
 
     try {
       await streamData(
-        `/artist?browse_id=${artist.browse_id}`,
+        `/metube/artist?browse_id=${artist.browse_id}`,
         () => {},
         undefined,
         '',
         ''
       );
       // Simulamos la respuesta del artista (deberías actualizar esto con streaming real)
-      const response = await fetch(`${API_BASE_URL}/artist?browse_id=${artist.browse_id}`);
+      const response = await fetch(`${API_BASE_URL}/metube/artist?browse_id=${artist.browse_id}`);
       const reader = response.body?.getReader();
       if (!reader) return;
 
@@ -144,7 +144,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
 
     try {
       await streamData(
-        `/artist/hits?browse_id=${artistDetails.playlist_id}`,
+        `/metube/artist/hits?browse_id=${artistDetails.playlist_id}`,
         onAddSongs,
         onStreamEvent,
         selectedArtist.result_name,
@@ -160,7 +160,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
 
     try {
       await streamData(
-        `/artist/discography?browse_id=${artistDetails.albums_ids}&params=${encodeURIComponent(artistDetails.albums_params)}`,
+        `/metube/artist/discography?browse_id=${artistDetails.albums_ids}&params=${encodeURIComponent(artistDetails.albums_params)}`,
         onAddSongs,
         undefined,
         selectedArtist.result_name,
@@ -259,7 +259,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
 
               {selectedArtist && artistDetails && (
                 <div className="flex gap-2">
-                  <Button 
+                  <Button
                     ref={pedirHitsButtonRef}
                     onClick={requestHits}
                     disabled={!artistDetails.playlist_id}
@@ -267,6 +267,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
                   >
                     Pedir Hits
                   </Button>
+                  {/* NOTE: cuando este bien implementado habilitarlo...*/}
                   <Button 
                     onClick={requestDiscography}
                     disabled={!artistDetails.albums_params}
@@ -275,6 +276,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
                   >
                     Pedir Discografía
                   </Button>
+                   {/**/}
                 </div>
               )}
             </div>
