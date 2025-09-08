@@ -3,8 +3,7 @@ export interface Song {
   artist_names: string[];
   ids?: string[];
   duration?: number;
-  video_type?: string;
-  playlist_id?: string;
+  quality?: string;
   album_name?: string;
   views?: number;
   rank?: number;
