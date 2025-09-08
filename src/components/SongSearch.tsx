@@ -57,7 +57,7 @@ export function SongSearch({ onAddSongs, existingTags }: SongSearchProps) {
     increment();
     try {
       await streamData(
-        `/search/song?query=${encodeURIComponent(songName)}&artist=${encodeURIComponent(artistName)}`,
+        `/metube/search/song?query=${encodeURIComponent(songName)}&artist=${encodeURIComponent(artistName)}`,
         onAddSongs,
         undefined,
         tagName,
