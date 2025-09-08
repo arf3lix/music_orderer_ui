@@ -180,10 +180,10 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
 
  
 
-  const handleSendRequest = useCallback(async () => {
+  const handleSendRequest = useCallback(async (deliveryType: 'DIGITAL_LINK' | 'PHYSICAL_USB') => {
     try {
       // Mostrar estado de carga
-      console.log('Enviando request...', { phone: userData.phone, songGroups });
+      console.log('Enviando request...', { phone: userData.phone, songGroups, deliveryType });
       
       const response = await fetch(`${API_BASE_URL}/api/order/create`, {
         method: 'POST',
@@ -192,6 +192,7 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
         },
         body: JSON.stringify({
           phoneNumber: userData.phone,
+          deliveryType: deliveryType,
           songGroups: songGroups
         })
       });
@@ -272,6 +273,7 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
               onMoveSong={handleMoveSong}
               onSendRequest={handleSendRequest}
               onDeleteGroup={handleDeleteGroup}
+              phoneNumber={userData.phone}
             />
           )}
         </div>
@@ -313,6 +315,7 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
             onMoveSong={handleMoveSong}
             onSendRequest={handleSendRequest}
             onDeleteGroup={handleDeleteGroup}
+            phoneNumber={userData.phone}
           />
         </div>
       </div>
