@@ -51,7 +51,8 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      outDir: 'dist',
+      emptyOutDir: true,
     },
     server: {
       host: '0.0.0.0', // Permite conexiones desde cualquier IP
