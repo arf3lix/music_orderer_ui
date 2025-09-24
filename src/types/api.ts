@@ -1,16 +1,31 @@
+// export interface Song {
+//   title: string;
+//   artist_names: string[];
+//   yt_ids?: string[];
+//   signature?: string;
+//   duration?: number;
+//   album_name?: string;
+//   quality?: string;
+//   views?: number;
+//   rank?: number;
+//   publish_date?: string;
+//   search_result: string;
+//   download_status: string;
+//   id?: string; // Para identificar canciones en replace
+// }
+
+
 export interface Song {
   title: string;
   artist_names: string[];
   ids?: string[];
+  album_name?: string;
   duration?: number;
   quality?: string;
-  album_name?: string;
   views?: number;
   rank?: number;
   publish_date?: string;
   search_result: string;
-  download_status: string;
-  id?: string; // Para identificar canciones en replace
 }
 
 export interface SearchedArtist {
