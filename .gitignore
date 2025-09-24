@@ -1,2 +1,5 @@
 .vite
 node_modules
+deploy.sh
+.env
+.env.production

@@ -1,1 +1,2 @@
-export const API_BASE_URL = 'http://192.168.1.80:3000';
+// Las variables deben comenzar con VITE_ para que sean expuestas al código fuente
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
