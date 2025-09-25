@@ -9,11 +9,11 @@ import { TagNameInput } from './TagNameInput';
 import { useStreamingApi } from '../hooks/useStreamingApi';
 
 interface SongSearchProps {
-  onAddSongs: (songs: any[], tagName: string, artistName: string) => void;
+  onAddSong: (song: any, tagName: string, artistName?: string) => void;
   existingTags: string[];
 }
 
-export function SongSearch({ onAddSongs, existingTags }: SongSearchProps) {
+export function SongSearch({ onAddSong, existingTags }: SongSearchProps) {
   const [tagName, setTagName] = useState('');
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
@@ -58,7 +58,7 @@ export function SongSearch({ onAddSongs, existingTags }: SongSearchProps) {
     try {
       await streamData(
         `/metube/search/song?query=${encodeURIComponent(songName)}&artist=${encodeURIComponent(artistName)}`,
-        onAddSongs,
+        onAddSong,
         undefined,
         tagName,
         artistName

@@ -10,24 +10,24 @@ import { PromptSearch } from './PromptSearch';
 import { SearchType } from '../types/api';
 
 interface RequestBuilderProps {
-  onAddSongs: (songs: any[], tagName: string, artistName: string) => void;
+  onAddSong: (song: any, tagName: string, artistName?: string) => void;
   onStreamEvent: (event: any, tagName: string, artistName?: string) => void;
   existingTags: string[];
 }
 
-export function RequestBuilder({ onAddSongs, onStreamEvent, existingTags }: RequestBuilderProps) {
+export function RequestBuilder({ onAddSong, onStreamEvent, existingTags }: RequestBuilderProps) {
   const [searchType, setSearchType] = useState<SearchType>('artist');
 
   const renderSearchComponent = () => {
     switch (searchType) {
       case 'artist':
-        return <ArtistSearch onAddSongs={onAddSongs} onStreamEvent={onStreamEvent} />;
+        return <ArtistSearch onAddSong={onAddSong} onStreamEvent={onStreamEvent} />;
       case 'song':
-        return <SongSearch onAddSongs={onAddSongs} existingTags={existingTags} />;
+        return <SongSearch onAddSong={onAddSong} existingTags={existingTags} />;
       case 'url':
-        return <UrlSearch onAddSongs={onAddSongs} existingTags={existingTags} />;
+        return <UrlSearch onAddSong={onAddSong} existingTags={existingTags} />;
       case 'prompt':
-        return <PromptSearch onAddSongs={onAddSongs} existingTags={existingTags} />;
+        return <PromptSearch onAddSong={onAddSong} existingTags={existingTags} />;
       default:
         return null;
     }

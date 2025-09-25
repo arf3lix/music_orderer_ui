@@ -8,11 +8,11 @@ import { TagNameInput } from './TagNameInput';
 import { useStreamingApi } from '../hooks/useStreamingApi';
 
 interface PromptSearchProps {
-  onAddSongs: (songs: any[], tagName: string, artistName: string) => void;
+  onAddSong: (song: any, tagName: string, artistName?: string) => void;
   existingTags: string[];
 }
 
-export function PromptSearch({ onAddSongs, existingTags }: PromptSearchProps) {
+export function PromptSearch({ onAddSong, existingTags }: PromptSearchProps) {
   const [tagName, setTagName] = useState('');
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ export function PromptSearch({ onAddSongs, existingTags }: PromptSearchProps) {
     try {
       await streamData(
         `/search/prompt?prompt=${encodeURIComponent(prompt)}`,
-        onAddSongs,
+        onAddSong,
         undefined,
         tagName,
         tagName

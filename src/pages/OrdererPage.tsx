@@ -56,15 +56,15 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
   }, []);
 
   const addSongToGroup = useCallback((
-    song: Song, 
-    tagName: string, 
-    artistName: string
+    song: Song,
+    tagName: string,
+    artistName?: string
   ) => {
     const hierarchicalSong: HierarchicalSong = {
       ...song,
       id: song.id || generateSongId(),
       tagName,
-      artistName
+      artistName: artistName || tagName
     };
 
     setSongGroups(prev => {
@@ -217,7 +217,7 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
 
     } catch (error) {
       console.error('Error enviando request:', error);
-      alert(`Error enviando el pedido: ${error.message}`);
+      alert(`Error enviando el pedido: ${error}`);
     }
   }, [songGroups, userData.phone]);;
 
@@ -260,8 +260,8 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
 
         <div className="flex-1 p-4">
           {currentPanel === 'builder' ? (
-            <RequestBuilder 
-              onAddSongs={addSongToGroup}
+            <RequestBuilder
+              onAddSong={addSongToGroup}
               onStreamEvent={handleStreamEvent}
               existingTags={existingTags}
             />
@@ -299,8 +299,8 @@ export const OrdererPage = ({ userData }: OrdererPageProps) => {
       <div className="flex-1 flex">
         {/* Left Panel - Request Builder */}
         <div className="w-1/2 p-4 border-r">
-          <RequestBuilder 
-            onAddSongs={addSongToGroup}
+          <RequestBuilder
+            onAddSong={addSongToGroup}
             onStreamEvent={handleStreamEvent}
             existingTags={existingTags}
           />

@@ -26,6 +26,7 @@ export interface Song {
   rank?: number;
   publish_date?: string;
   search_result: string;
+  id?: string;
 }
 
 export interface SearchedArtist {

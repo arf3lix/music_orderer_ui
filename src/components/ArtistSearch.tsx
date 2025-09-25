@@ -9,11 +9,11 @@ import { useStreamingApi } from '../hooks/useStreamingApi';
 import { API_BASE_URL } from '../constants/api';
 
 interface ArtistSearchProps {
-  onAddSongs: (songs: any[], tagName: string, artistName: string) => void;
+  onAddSong: (song: any, tagName: string, artistName?: string) => void;
   onStreamEvent: (event: any, tagName: string, artistName?: string) => void;
 }
 
-export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
+export function ArtistSearch({ onAddSong, onStreamEvent }: ArtistSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchedArtist[]>([]);
   const [selectedArtist, setSelectedArtist] = useState<SearchedArtist | null>(null);
@@ -145,7 +145,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
     try {
       await streamData(
         `/metube/artist/hits?browse_id=${artistDetails.playlist_id}`,
-        onAddSongs,
+        onAddSong,
         onStreamEvent,
         selectedArtist.result_name,
         selectedArtist.result_name
@@ -156,12 +156,12 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
   };
 
   const requestDiscography = async () => {
-    if (!selectedArtist || !artistDetails?.albums_params || !artistDetails.albums_ids) return;
+    if (!selectedArtist || !artistDetails?.albums_params || !artistDetails.albums_id) return;
 
     try {
       await streamData(
-        `/metube/artist/discography?browse_id=${artistDetails.albums_ids}&params=${encodeURIComponent(artistDetails.albums_params)}`,
-        onAddSongs,
+        `/metube/artist/discography?browse_id=${artistDetails.albums_id}&params=${encodeURIComponent(artistDetails.albums_params)}`,
+        onAddSong,
         undefined,
         selectedArtist.result_name,
         selectedArtist.result_name
@@ -267,7 +267,7 @@ export function ArtistSearch({ onAddSongs, onStreamEvent }: ArtistSearchProps) {
                   >
                     Pedir Hits
                   </Button>
-                  {/* NOTE: cuando este bien implementado habilitarlo...*/}
+                  {/* NOTE: cuando este bien implementado habilitarlo...
                   <Button 
                     onClick={requestDiscography}
                     disabled={!artistDetails.albums_params}

@@ -8,11 +8,11 @@ import { TagNameInput } from './TagNameInput';
 import { useStreamingApi } from '../hooks/useStreamingApi';
 
 interface UrlSearchProps {
-  onAddSongs: (songs: any[], tagName: string, artistName: string) => void;
+  onAddSong: (song: any, tagName: string, artistName?: string) => void;
   existingTags: string[];
 }
 
-export function UrlSearch({ onAddSongs, existingTags }: UrlSearchProps) {
+export function UrlSearch({ onAddSong, existingTags }: UrlSearchProps) {
   const [tagName, setTagName] = useState('');
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ export function UrlSearch({ onAddSongs, existingTags }: UrlSearchProps) {
     try {
       await streamData(
         `/search/url?url=${encodeURIComponent(url)}`,
-        onAddSongs,
+        onAddSong,
         undefined,
         tagName,
         tagName
